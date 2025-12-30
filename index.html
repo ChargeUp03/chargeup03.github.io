@@ -1,235 +1,1069 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="antialiased">
 <head>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" media="(prefers-color-scheme: light)">
+    <link rel="apple-touch-icon" href="apple-touch-icon-dark.png" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="apple-touch-icon-tinted.png" media="(device-width: 393px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <meta name="theme-color" content="#f3f4f6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#212936" media="(prefers-color-scheme: dark)">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chargeup03 | Hub</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta property="og:title" content="ShotCard">
+    <meta property="og:description" content="Add camera information to your photos!">
+    <meta property="og:image" content="https://chargeup03.github.io/shotcardicon.png">
+    <meta property="og:url" content="https://chargeup03.github.io/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chargeup03.github.io/shotcardicon.png">
+    <title>ShotCard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exifr/dist/full.umd.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+                        mono: ['Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            /* Colors */
-            --bg-gradient: linear-gradient(225deg, #f19e38 0%, #0000f5 100%);
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --text-color: #ffffff;
-            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            --section-title-color: rgba(255, 255, 255, 0.9);
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        
+        /* Checkbox styling */
+        .custom-checkbox {
+            accent-color: #2563eb;
         }
 
-        /* Dark Mode Variables */
-        .dark-mode {
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-color: #ffffff; 
-            --section-title-color: #ffffff;
+        /* Modal Overlay */
+        .modal-open {
+            overflow: hidden;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: #000000; /* Base color is black */
-            color: var(--text-color);
-            transition: color 0.5s ease; /* Only animate text color here */
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative; /* Needed for the background layer */
-            overflow-x: hidden;
-        }
-
-        /* THE FIX: Background Gradient Layer */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-gradient);
-            z-index: -1; /* Puts it behind everything */
-            transition: opacity 0.5s ease; /* Smooth fade */
-            opacity: 1;
-        }
-
-        /* When dark mode is active, fade out the gradient layer */
-        body.dark-mode::before {
-            opacity: 0;
-        }
-
-        /* Navbar Layout */
-        .navbar {
-            width: 90%;
-            max-width: 800px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            z-index: 10;
-        }
-
-        .brand-logo {
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.5px;
-        }
-
-        .dark-mode-toggle {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.9);
-            color: black;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            transition: transform 0.2s ease;
-        }
-
-        .dark-mode-toggle:active {
-            transform: scale(0.95);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 800px;
-            padding-bottom: 40px;
-            text-align: center;
-            z-index: 10;
-        }
-
-        /* Glassmorphism Card */
-        .glass-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 20px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: background 0.5s ease, border 0.5s ease;
-        }
-
-        /* Older Device Fallback */
-        @supports not ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))) {
-            .glass-card {
-                background: rgba(20, 20, 20, 0.8);
-            }
-            .dark-mode .glass-card {
-                background: rgba(255, 255, 255, 0.1);
-            }
-        }
-
-        h1 { font-weight: 600; margin-bottom: 10px; margin-top: 0; }
-        p { font-weight: 300; line-height: 1.6; }
-
-        .section-title {
-            margin-top: 35px;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--section-title-color);
-            text-align: left;
-            padding-left: 5px;
-        }
-
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .link-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 15px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: transform 0.2s ease, background 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-align: center;
-            font-size: 0.95rem;
-        }
-
-        .link-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-        }
-
-        .profile-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.8);
-        }
-
-        @media (max-width: 600px) {
-            .navbar {
-                flex-direction: row;
-                align-items: center;
-            }
+        /* Drag Overlay */
+        #dragOverlay {
+            pointer-events: none;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col font-sans" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
 
-    <div class="navbar">
-        <div class="brand-logo">Charge</div>
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
-    </div>
-
-    <div class="container">
-        <div class="glass-card">
-            <h1>About Me</h1>
-            <p>Welcome to my hub! I'm a creator and developer building tools like ShotCard and sharing content across YouTube and Instagram. Check out my projects below.</p>
-        </div>
-
-        <div class="section-title">Projects</div>
-        <div class="links-grid">
-            <a href="https://chargeup03.github.io/shotcard" class="link-btn">ShotCard</a>
-            <a href="https://chargeup03.github.io/ua" class="link-btn">User Agent String</a>
-            <a href="https://chargeup03.github.io/collection" class="link-btn">Device Collection</a>
-            <a href="https://chargeup03.github.io/shortcuts" class="link-btn">Apple Shortcuts</a>
-            <a href="https://sites.google.com/view/charge03" class="link-btn">Google Sites Homepage</a>
-        </div>
-
-        <div class="section-title">Socials</div>
-        <div class="links-grid">
-            <a href="https://www.youtube.com/@chargeupgaming" class="link-btn">
-                <img src="https://via.placeholder.com/50" alt="Charge" class="profile-img">
-                Charge (YouTube)
-            </a>
-            <a href="https://www.youtube.com/@whitedesktech" class="link-btn">
-                <img src="https://via.placeholder.com/50" alt="WhiteDeskTech" class="profile-img">
-                WhiteDeskTech (YouTube)
-            </a>
-            <a href="https://www.youtube.com/@chargestudios03" class="link-btn">
-                <img src="https://via.placeholder.com/50" alt="Charge Studios" class="profile-img">
-                Charge Studios (YouTube)
-            </a>
-            <a href="https://www.instagram.com/whitedesktech/" class="link-btn">
-                <img src="https://via.placeholder.com/50" alt="Instagram" class="profile-img">
-                WhiteDeskTech (Instagram)
-            </a>
+    <!-- Drag Overlay -->
+    <div id="dragOverlay" class="fixed inset-0 bg-blue-500/20 z-50 hidden flex items-center justify-center border-4 border-blue-500 border-dashed m-4 rounded-3xl">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl text-center">
+            <svg class="w-12 h-12 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            <h3 class="text-xl font-bold">Drop image here</h3>
         </div>
     </div>
 
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-30 w-full px-4 sm:px-6 lg:px-8">
+        <div class="h-16 flex justify-between items-center w-full">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight">ShotCard</h1>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Upload Button (Navbar) -->
+                <button onclick="triggerUpload()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300" title="Upload Image">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                </button>
+                
+                <!-- Info Button -->
+                <button onclick="openInfo()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300" title="Info & Credits">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300">
+                    <svg id="sunIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <!-- Improved Moon Icon -->
+                    <svg id="moonIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Info/Credits Modal -->
+    <div id="infoModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 transform scale-100 transition-transform">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
+                <h3 class="text-lg font-bold">Info</h3>
+                <button onclick="closeInfo()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="space-y-4 text-center py-2">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Version</p>
+                    <p class="text-lg font-bold text-gray-800 dark:text-gray-100">v1.0 Release</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 dark:text-gray-300">Generated by Google Gemini 3 Pro</p>
+                    <p class="text-gray-600 dark:text-gray-300 font-medium">Concept by Charge</p>
+                </div>
+                <button onclick="window.open('https://sites.google.com/view/shotcard/previous-versions', '_blank')" class="w-full mt-4 py-2 px-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-200 rounded-lg text-sm font-medium transition-colors">
+                    Previous Versions
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 lg:p-8 flex flex-col justify-center">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- LEFT COLUMN: Preview -->
+            <!-- We toggle col-span-3 to col-span-2 to ensure perfect centering when no controls are shown -->
+            <div id="previewContainer" class="lg:col-span-3 flex flex-col gap-4 transition-all duration-300">
+                
+                <!-- Upload State (Centered) -->
+                <div id="uploadState" class="flex-grow flex flex-col items-center justify-center min-h-[60vh] transition-all">
+                    <div class="flex flex-col gap-4 w-full max-w-lg items-center justify-center h-full">
+                        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 w-full flex flex-col items-center justify-center text-center transition-all hover:border-blue-500 dark:hover:border-blue-500 cursor-pointer hover:shadow-md group" onclick="triggerUpload()">
+                            <div class="bg-blue-50 dark:bg-blue-900/30 w-24 h-24 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200">
+                                <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Upload Photo</h3>
+                            <p class="text-gray-500 dark:text-gray-400">Drag & Drop or Click to Select</p>
+                        </div>
+                        
+                        <button onclick="loadDemo()" class="text-sm text-gray-400 hover:text-blue-500 transition-colors font-medium text-center py-2">
+                            Use Demo Photo
+                        </button>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" class="hidden" accept="image/*">
+
+                <!-- Preview State (Hidden by default) -->
+                <div id="previewState" class="hidden bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-800/50">
+                        <div class="flex items-center gap-2">
+                            <h2 class="font-semibold text-gray-700 dark:text-gray-200">Live Preview</h2>
+                        </div>
+                        <button onclick="resetApp()" class="text-gray-400 hover:text-red-500 transition-colors" title="Close">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                    <!-- Canvas/Image Container (No Padding) -->
+                    <div class="relative bg-gray-100 dark:bg-black/50 flex flex-col items-center justify-center overflow-hidden min-h-[400px] p-0">
+                        <div id="previewWrapper" class="w-full flex flex-col shadow-2xl transition-all" style="max-width: 100%;">
+                            <img id="previewImage" class="w-full h-auto block object-contain max-h-[70vh] bg-black" alt="Preview">
+                            
+                            <!-- HTML Overlay for Preview -->
+                            <div id="cardPreview" class="w-full p-6 flex justify-between items-start transition-colors duration-200 bg-white text-black">
+                                <!-- Left Side -->
+                                <div id="prev-left-col" class="flex flex-col justify-between h-full gap-1 w-1/2">
+                                    <h1 id="prev-model" class="text-2xl font-bold leading-tight truncate">Camera Model</h1>
+                                    
+                                    <!-- Meta Group -->
+                                    <div class="flex flex-col gap-1 mt-1">
+                                        <div id="prev-datetime-group" class="flex items-center gap-2 text-sm font-normal opacity-90">
+                                            <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            <span id="prev-datetime">Date • Time</span>
+                                        </div>
+                                        <div id="prev-location-group" class="flex items-center gap-2 text-sm font-normal opacity-90">
+                                            <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                            <span id="prev-location">Location</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right Side (3 Lines) -->
+                                <div id="prev-right-col" class="flex flex-col items-end gap-1 text-right font-medium text-lg leading-snug w-1/2">
+                                    <div id="prev-line1" class="whitespace-nowrap">Line 1</div>
+                                    <div id="prev-line2" class="whitespace-nowrap">Line 2</div>
+                                    <div id="prev-line3" class="whitespace-nowrap flex items-center gap-1">
+                                        <!-- Flash Icon injected via JS -->
+                                        <span id="prev-flash-text">Line 3</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Warning -->
+                    <div class="lg:hidden bg-blue-50 dark:bg-blue-900/30 p-4 border-t border-blue-100 dark:border-blue-800 flex items-start gap-3">
+                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p class="text-sm text-blue-800 dark:text-blue-200">Your screen seems to be thin. Don't worry, the image won't be truncated when you download it.</p>
+                    </div>
+
+                    <div id="narrowWarning" class="hidden bg-yellow-50 dark:bg-yellow-900/30 p-4 border-t border-yellow-100 dark:border-yellow-800 flex items-start gap-3">
+                        <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <div>
+                            <p class="font-semibold text-yellow-800 dark:text-yellow-200 text-sm">Narrow Image Detected</p>
+                            <p class="text-yellow-700 dark:text-yellow-300 text-xs mt-1">The card might look cramped. Try shortening the location name.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Controls -->
+            <div id="controlsPanel" class="hidden lg:col-span-1 space-y-6">
+                
+                <!-- Download Section -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                    <div class="flex gap-2 mb-4">
+                        <div class="w-full">
+                             <label class="text-xs font-semibold text-gray-500 mb-1 block">Format</label>
+                             <select id="downloadFormat" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                 <option value="image/jpeg">JPG (Standard)</option>
+                                 <option value="image/png">PNG (Lossless)</option>
+                             </select>
+                        </div>
+                    </div>
+
+                    <button onclick="downloadImage()" id="downloadBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95">
+                        <!-- Download Arrow Icon -->
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>Download Image</span>
+                    </button>
+                    <p id="outputDim" class="text-xs text-center text-gray-400 mt-3">Ready to render</p>
+                </div>
+
+                <!-- Styling -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 dark:text-gray-200 text-sm uppercase tracking-wider">Styling</h3>
+                        <button onclick="resetStyling()" class="text-xs text-blue-500 hover:text-blue-600 font-medium">Reset Defaults</button>
+                    </div>
+                    
+                    <!-- Colors & Font -->
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 mb-2 block">Card Color</label>
+                            <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-900 p-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <input type="color" id="bgColorInput" value="#ffffff" class="h-8 w-8 rounded border-none cursor-pointer bg-transparent" oninput="updateStyles()">
+                                <span id="bgColorHex" class="text-xs font-mono text-gray-500">#ffffff</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 mb-2 block">Text Color</label>
+                            <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-900 p-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <input type="color" id="textColorInput" value="#000000" class="h-8 w-8 rounded border-none cursor-pointer bg-transparent" oninput="updateStyles()">
+                                <span id="textColorHex" class="text-xs font-mono text-gray-500">#000000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="text-xs font-semibold text-gray-500 mb-2 block">Font Family</label>
+                        <select id="fontSelect" onchange="updateStyles()" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-2 text-sm">
+                            <option value="sans">System / SF Pro (Default)</option>
+                            <option value="serif">Serif (Classic)</option>
+                            <option value="mono">Monospace (Technical)</option>
+                            <option value="retro">Courier (Retro)</option>
+                        </select>
+                    </div>
+
+                    <!-- Retro Border Options -->
+                    <div class="border-t border-gray-100 dark:border-gray-700 pt-4 mt-4">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="borderCheck" class="custom-checkbox w-4 h-4 rounded text-blue-600" onchange="updatePreview()">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Retro Border</span>
+                        </label>
+                        
+                        <div id="borderOptions" class="hidden mt-3 pl-6 space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="hideInfoCheck" class="custom-checkbox w-4 h-4 rounded text-blue-600" onchange="updatePreview()">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Remove all info</span>
+                            </label>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-gray-500">Border Color:</span>
+                                <input type="color" id="borderColorInput" value="#ffffff" class="h-6 w-6 rounded border cursor-pointer" oninput="syncBorderColor()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Form -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 max-h-[600px] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Camera Info
+                        </h3>
+                        <button onclick="reprocessImage()" class="text-xs text-blue-500 hover:text-blue-600 font-medium">Auto-Detect Again</button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Brand</label>
+                                    <input type="checkbox" id="show-make" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-make" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                            </div>
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Model</label>
+                                    <input type="checkbox" id="show-model" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-model" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Lens (mm)</label>
+                                    <input type="checkbox" id="show-focal" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-focal" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                            </div>
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Aperture</label>
+                                    <input type="checkbox" id="show-aperture" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-aperture" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Shutter</label>
+                                    <input type="checkbox" id="show-shutter" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-shutter" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                            </div>
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">ISO</label>
+                                    <input type="checkbox" id="show-iso" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-iso" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Exp Bias</label>
+                                    <input type="checkbox" id="show-exp" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-exp" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                            </div>
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Flash</label>
+                                    <input type="checkbox" id="show-flash" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <select id="in-flash" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" onchange="updatePreview()">
+                                    <option value="">No Icon</option>
+                                    <option value="Flash">Flash Fired</option>
+                                    <option value="No Flash">No Flash</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-xs text-gray-500">Megapixels (MP)</label>
+                                <input type="checkbox" id="show-mp" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                            </div>
+                            <input type="text" id="in-mp" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                        </div>
+                    </div>
+
+                    <!-- Location & Time Box -->
+                    <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3 text-sm flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Location & Time
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="input-group">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-xs text-gray-500">Date</label>
+                                        <input type="checkbox" id="show-date" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                    </div>
+                                    <input type="text" id="in-date" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                                </div>
+                                <div class="input-group">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-xs text-gray-500">Time</label>
+                                        <input type="checkbox" id="show-time" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                    </div>
+                                    <input type="text" id="in-time" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs text-gray-500">Location</label>
+                                    <input type="checkbox" id="show-location" checked class="custom-checkbox w-3 h-3" onchange="updatePreview()">
+                                </div>
+                                <input type="text" id="in-location" placeholder="City, Country" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded p-2 text-sm" oninput="updatePreview()">
+                                <input type="hidden" id="in-coords">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- App Logic -->
     <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
+        // State
+        let currentFile = null;
+        let originalFilename = "";
+        let originalImg = new Image();
+        originalImg.crossOrigin = "anonymous";
+        let imgLoaded = false;
+        let hasDownloaded = false;
+        
+        // Icons SVG Paths
+        const icons = {
+            flash: "M13 10V3L4 14h7v7l9-11h-7z", // Zap
+            flashOff: "M13 10V3L4 14h7v7l9-11h-7z M3 3l18 18", 
+            calendar: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
+            mapPin: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+        };
+
+        const fonts = {
+            sans: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif",
+            serif: "Georgia, Cambria, 'Times New Roman', Times, serif",
+            mono: "Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+            retro: "'Courier New', Courier, monospace"
+        };
+
+        // --- DRAG AND DROP ---
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('dragOverlay').classList.remove('hidden');
         }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            if (!e.relatedTarget || e.relatedTarget.nodeName === "HTML") {
+                 document.getElementById('dragOverlay').classList.add('hidden');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('dragOverlay').classList.add('hidden');
+            
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                const file = e.dataTransfer.files[0];
+                if (file.type.startsWith('image/')) {
+                    checkDownloadBeforeAction(() => processFile(file));
+                }
+            }
+        }
+
+        function triggerUpload() {
+            checkDownloadBeforeAction(() => document.getElementById('fileInput').click());
+        }
+
+        // --- INFO MODAL ---
+        function openInfo() {
+            document.getElementById('infoModal').classList.remove('hidden');
+            setTimeout(() => document.body.classList.add('modal-open'), 0);
+        }
+        function closeInfo() {
+            document.getElementById('infoModal').classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        }
+        document.getElementById('infoModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('infoModal')) closeInfo();
+        });
+
+        // --- THEME ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        function initTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                updateThemeIcons(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateThemeIcons(false);
+            }
+        }
+
+        function updateThemeIcons(isDark) {
+            if (isDark) {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.theme = isDark ? 'dark' : 'light';
+            updateThemeIcons(isDark);
+        });
+        initTheme();
+
+        // --- FILE HANDLING ---
+        const fileInput = document.getElementById('fileInput');
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            processFile(file);
+        }
+
+        function checkDownloadBeforeAction(callback) {
+            if (currentFile && !hasDownloaded) {
+                if (confirm("It looks like you haven't downloaded your image. Would you like to download it now?")) {
+                    downloadImage();
+                    // Don't proceed with action if they chose to download, or proceed? 
+                    // Usually user expects to download THEN do action. 
+                    // Let's just download. If they cancel, we proceed.
+                    // Wait, confirm returns true for OK.
+                    // User flow: "Yes download" -> Download starts -> Action Canceled? Or Action queued?
+                    // Better flow: "Yes" -> Download. "No" -> Proceed with action.
+                    // The prompt asks "Would you like to download it now?".
+                    // If OK -> Download.
+                    // If Cancel -> Proceed to overwrite.
+                    return; 
+                }
+            }
+            callback();
+        }
+
+        async function loadDemo() {
+             checkDownloadBeforeAction(async () => {
+                try {
+                    const response = await fetch('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2000&auto=format&fit=crop');
+                    const blob = await response.blob();
+                    const file = new File([blob], "camera_demo.jpg", { type: "image/jpeg" });
+                    
+                    // Reset original filename logic to use file name (which we just set to camera_demo.jpg)
+                    // or user requested "how it was before". 
+                    // In v4.0 code, I removed explicit override, so it used file.name. 
+                    // Let's stick to standard behavior.
+                    
+                    const url = URL.createObjectURL(file);
+                    currentFile = file;
+                    clearFields();
+                    originalFilename = "camera_demo"; // Explicitly set based on file name construction
+
+                    // Manually set Demo Data
+                    setVal('in-make', 'Canon');
+                    setVal('in-model', 'EOS R5');
+                    setVal('in-focal', '50mm');
+                    setVal('in-aperture', 'ƒ/1.2');
+                    setVal('in-shutter', '1/2000');
+                    setVal('in-iso', 'ISO 100');
+                    setVal('in-exp', 'EXP 0');
+                    setVal('in-flash', 'No Flash');
+                    setVal('in-date', new Date().toLocaleDateString());
+                    setVal('in-time', '14:30 PM');
+                    setVal('in-location', 'Tokyo, Japan');
+                    setVal('in-mp', '45.0MP');
+
+                    const previewImg = document.getElementById('previewImage');
+                    
+                    document.getElementById('bgColorInput').value = "#ffffff";
+                    document.getElementById('textColorInput').value = "#000000";
+                    updateStyles();
+
+                    previewImg.onload = () => {
+                        document.getElementById('narrowWarning').classList.add('hidden');
+                        document.getElementById('outputDim').innerText = `Output: ${previewImg.naturalWidth} x ${Math.round(previewImg.naturalHeight * 1.15)}px`;
+                        imgLoaded = true;
+                        hasDownloaded = false;
+                        originalImg.src = url;
+                        
+                        updatePreview(); 
+                        
+                        showPreviewUI();
+                    };
+                    
+                    previewImg.src = url;
+
+                } catch (e) {
+                    alert("Could not load demo image");
+                    console.error(e);
+                }
+            });
+        }
+
+        function processFile(file) {
+            currentFile = file;
+            clearFields();
+            
+            // Reset Border Logic
+            document.getElementById('borderCheck').checked = false;
+            
+            originalFilename = file.name.split('.')[0];
+
+            const url = URL.createObjectURL(file);
+            const previewImg = document.getElementById('previewImage');
+            
+            document.getElementById('bgColorInput').value = "#ffffff";
+            document.getElementById('textColorInput').value = "#000000";
+            updateStyles();
+
+            previewImg.onload = () => {
+                const aspect = previewImg.naturalWidth / previewImg.naturalHeight;
+                if (aspect < 0.5) {
+                    document.getElementById('narrowWarning').classList.remove('hidden');
+                } else {
+                    document.getElementById('narrowWarning').classList.add('hidden');
+                }
+                document.getElementById('outputDim').innerText = `Output: ${previewImg.naturalWidth} x ${Math.round(previewImg.naturalHeight * 1.15)}px`;
+                
+                const mp = (previewImg.naturalWidth * previewImg.naturalHeight / 1000000).toFixed(1) + "MP";
+                document.getElementById('in-mp').value = mp;
+                
+                imgLoaded = true;
+                hasDownloaded = false;
+            };
+            
+            previewImg.src = url;
+            originalImg.src = url;
+
+            showPreviewUI();
+            
+            extractExif(file);
+        }
+
+        function showPreviewUI() {
+            document.getElementById('uploadState').classList.add('hidden');
+            document.getElementById('previewContainer').classList.remove('lg:col-span-3');
+            document.getElementById('previewContainer').classList.add('lg:col-span-2');
+            document.getElementById('previewState').classList.remove('hidden');
+            document.getElementById('controlsPanel').classList.remove('hidden');
+        }
+
+        function reprocessImage() {
+            if(currentFile) processFile(currentFile);
+        }
+
+        async function extractExif(file) {
+            try {
+                const output = await exifr.parse(file);
+                if (!output) {
+                    updatePreview();
+                    return;
+                }
+
+                let shutter = output.ExposureTime;
+                if (shutter && shutter < 1) {
+                    shutter = `1/${Math.round(1 / shutter)}`;
+                } else if (shutter) {
+                    shutter = `${shutter}"`;
+                }
+
+                let dateStr = '';
+                let timeStr = '';
+                if (output.DateTimeOriginal) {
+                    const d = new Date(output.DateTimeOriginal);
+                    dateStr = d.toLocaleDateString();
+                    timeStr = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                }
+
+                setVal('in-make', output.Make);
+                setVal('in-model', output.Model);
+                setVal('in-focal', output.FocalLength ? `${Math.round(output.FocalLength)}mm` : '');
+                setVal('in-aperture', output.FNumber ? `ƒ/${output.FNumber}` : '');
+                setVal('in-shutter', shutter);
+                setVal('in-iso', output.ISO ? `ISO ${output.ISO}` : '');
+                setVal('in-exp', output.ExposureBiasValue ? `EXP ${output.ExposureBiasValue.toFixed(1)}` : 'EXP 0');
+                
+                const flashSelect = document.getElementById('in-flash');
+                if (output.Flash !== undefined) {
+                    if (String(output.Flash).includes("Flash fired") || output.Flash === true) flashSelect.value = "Flash";
+                    else flashSelect.value = "No Flash";
+                } else {
+                    flashSelect.value = "No Flash"; 
+                }
+
+                setVal('in-date', dateStr);
+                setVal('in-time', timeStr);
+
+                if (output.latitude && output.longitude) {
+                    setVal('in-coords', `${output.latitude.toFixed(4)}, ${output.longitude.toFixed(4)}`);
+                }
+
+                updatePreview();
+
+            } catch (e) {
+                console.error("EXIF Error", e);
+                updatePreview();
+            }
+        }
+
+        function clearFields() {
+            const ids = ['in-make', 'in-model', 'in-focal', 'in-aperture', 'in-shutter', 'in-iso', 'in-exp', 'in-date', 'in-time', 'in-location', 'in-coords', 'in-mp'];
+            ids.forEach(id => document.getElementById(id).value = '');
+            document.getElementById('in-flash').value = 'No Flash';
+        }
+
+        function setVal(id, val) {
+            if (val !== undefined && val !== null) document.getElementById(id).value = val;
+        }
+        function getVal(id) { return document.getElementById(id).value; }
+
+        function resetStyling() {
+            document.getElementById('bgColorInput').value = "#ffffff";
+            document.getElementById('textColorInput').value = "#000000";
+            document.getElementById('fontSelect').value = "sans";
+            updateStyles();
+        }
+
+        function updateStyles() {
+            const bg = document.getElementById('bgColorInput').value;
+            const text = document.getElementById('textColorInput').value;
+            const fontKey = document.getElementById('fontSelect').value;
+            
+            document.getElementById('bgColorHex').innerText = bg;
+            document.getElementById('textColorHex').innerText = text;
+            
+            const prev = document.getElementById('cardPreview');
+            prev.style.backgroundColor = bg;
+            prev.style.color = text;
+            
+            if(fontKey === 'sans') prev.style.fontFamily = fonts.sans;
+            if(fontKey === 'serif') prev.style.fontFamily = fonts.serif;
+            if(fontKey === 'mono') prev.style.fontFamily = fonts.mono;
+            if(fontKey === 'retro') prev.style.fontFamily = fonts.retro;
+
+            updatePreview();
+        }
+
+        function syncBorderColor() {
+            const borderColor = document.getElementById('borderColorInput').value;
+            document.getElementById('bgColorInput').value = borderColor;
+            updateStyles();
+            updatePreview();
+        }
+
+        function updatePreview() {
+            // Border Logic
+            const borderActive = document.getElementById('borderCheck').checked;
+            const hideInfo = document.getElementById('hideInfoCheck').checked;
+            const borderColor = document.getElementById('borderColorInput').value;
+
+            const borderOpts = document.getElementById('borderOptions');
+            if(borderActive) borderOpts.classList.remove('hidden');
+            else borderOpts.classList.add('hidden');
+
+            const card = document.getElementById('cardPreview');
+            const wrapper = document.getElementById('previewWrapper');
+
+            if (borderActive) {
+                wrapper.style.padding = "20px";
+                wrapper.style.backgroundColor = borderColor;
+            } else {
+                wrapper.style.padding = "0";
+                wrapper.style.backgroundColor = "transparent";
+            }
+
+            if (borderActive && hideInfo) {
+                card.style.visibility = 'hidden'; 
+                card.style.visibility = 'visible';
+                Array.from(card.children).forEach(c => c.style.opacity = '0');
+            } else {
+                card.style.visibility = 'visible';
+                Array.from(card.children).forEach(c => c.style.opacity = '1');
+            }
+
+            // Text Logic
+            // Brand & Model
+            const showMake = document.getElementById('show-make').checked;
+            const showModel = document.getElementById('show-model').checked;
+            let brandModel = "";
+            if (showMake) brandModel += getVal('in-make') + " ";
+            if (showModel) brandModel += getVal('in-model');
+            brandModel = brandModel.trim() || 'Camera Model';
+            if(!showMake && !showModel) brandModel = "";
+            document.getElementById('prev-model').innerText = brandModel;
+
+            const showDate = document.getElementById('show-date').checked;
+            const showTime = document.getElementById('show-time').checked;
+            let dtParts = [];
+            if (showDate && getVal('in-date')) dtParts.push(getVal('in-date'));
+            if (showTime && getVal('in-time')) dtParts.push(getVal('in-time'));
+            
+            const dtGroup = document.getElementById('prev-datetime-group');
+            if (dtParts.length > 0) {
+                document.getElementById('prev-datetime').innerText = dtParts.join(' • ');
+                dtGroup.style.display = 'flex';
+            } else {
+                dtGroup.style.display = 'none';
+            }
+
+            const showLoc = document.getElementById('show-location').checked;
+            const locText = getVal('in-location') || getVal('in-coords');
+            const locGroup = document.getElementById('prev-location-group');
+            if (showLoc && locText) {
+                document.getElementById('prev-location').innerText = locText;
+                locGroup.style.display = 'flex';
+            } else {
+                locGroup.style.display = 'none';
+            }
+
+            // Line 1: MM, Aperture, Shutter
+            const showFocal = document.getElementById('show-focal').checked;
+            const showAperture = document.getElementById('show-aperture').checked;
+            const showShutter = document.getElementById('show-shutter').checked;
+            
+            let l1Parts = [];
+            if(showFocal && getVal('in-focal')) l1Parts.push(getVal('in-focal'));
+            if(showAperture && getVal('in-aperture')) l1Parts.push(getVal('in-aperture'));
+            if(showShutter && getVal('in-shutter')) l1Parts.push(getVal('in-shutter'));
+            
+            document.getElementById('prev-line1').innerText = l1Parts.join('\u00A0\u00A0\u00A0');
+
+            // Line 2: ISO, Exp, MP
+            const showIso = document.getElementById('show-iso').checked;
+            const showExp = document.getElementById('show-exp').checked;
+            const showMp = document.getElementById('show-mp').checked;
+
+            let l2Parts = [];
+            if (showIso && getVal('in-iso')) l2Parts.push(getVal('in-iso'));
+            if (showExp && getVal('in-exp')) l2Parts.push(getVal('in-exp'));
+            if (showMp && getVal('in-mp')) l2Parts.push(getVal('in-mp'));
+            document.getElementById('prev-line2').innerText = l2Parts.join('\u00A0\u00A0\u00A0');
+
+            // Line 3: Flash
+            const showFlash = document.getElementById('show-flash').checked;
+            const flashVal = document.getElementById('in-flash').value;
+            const flashContainer = document.getElementById('prev-line3');
+            flashContainer.innerHTML = ''; 
+
+            if (showFlash && flashVal) {
+                const svgNS = "http://www.w3.org/2000/svg";
+                const svg = document.createElementNS(svgNS, "svg");
+                svg.setAttribute("width", "16");
+                svg.setAttribute("height", "16");
+                svg.setAttribute("viewBox", "0 0 24 24");
+                svg.setAttribute("fill", "none");
+                svg.setAttribute("stroke", "currentColor");
+                svg.setAttribute("stroke-width", "2");
+                
+                const path = document.createElementNS(svgNS, "path");
+                if (flashVal === "Flash") path.setAttribute("d", icons.flash);
+                else if (flashVal === "No Flash") path.setAttribute("d", icons.flashOff);
+                
+                if(flashVal === "No Flash") path.setAttribute("stroke-opacity", "0.7");
+                
+                svg.appendChild(path);
+                flashContainer.appendChild(svg);
+                
+                const span = document.createElement("span");
+                span.innerText = flashVal;
+                flashContainer.appendChild(span);
+            }
+        }
+
+        function resetApp() {
+            checkDownloadBeforeAction(() => {
+                document.getElementById('fileInput').value = '';
+                document.getElementById('previewState').classList.add('hidden');
+                document.getElementById('controlsPanel').classList.add('hidden');
+                document.getElementById('uploadState').classList.remove('hidden');
+                // Reset layout
+                document.getElementById('previewContainer').classList.remove('lg:col-span-2');
+                document.getElementById('previewContainer').classList.add('lg:col-span-3');
+                currentFile = null;
+                hasDownloaded = false;
+            });
+        }
+
+        // --- DOWNLOAD ENGINE ---
+        function downloadImage() {
+            if (!imgLoaded) return;
+            const btn = document.getElementById('downloadBtn');
+            const originalText = btn.innerHTML;
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const format = document.getElementById('downloadFormat').value; 
+            const ext = format === 'image/png' ? 'png' : 'jpg';
+            const quality = 0.95;
+
+            setTimeout(() => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const width = originalImg.naturalWidth;
+                const height = originalImg.naturalHeight;
+                
+                const borderActive = document.getElementById('borderCheck').checked;
+                const hideInfo = document.getElementById('hideInfoCheck').checked;
+                const borderColor = document.getElementById('borderColorInput').value;
+
+                // Dynamic sizing
+                const baseUnit = width * 0.025; 
+                const padding = baseUnit * 1.5;
+                
+                const cardHeight = Math.max(height * 0.12, baseUnit * 7.0); 
+
+                const borderSize = borderActive ? (width * 0.04) : 0; 
+
+                canvas.width = width + (borderSize * 2);
+                canvas.height = height + cardHeight + (borderSize * 2);
+
+                if (borderActive) {
+                    ctx.fillStyle = borderColor;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+
+                ctx.translate(borderSize, borderSize);
+
+                ctx.fillStyle = document.getElementById('bgColorInput').value;
+                ctx.fillRect(0, height, width, cardHeight);
+
+                ctx.drawImage(originalImg, 0, 0);
+
+                if (!hideInfo) {
+                    ctx.fillStyle = document.getElementById('textColorInput').value;
+                    ctx.textBaseline = 'top';
+                    
+                    const fontKey = document.getElementById('fontSelect').value;
+                    const fontStack = fonts[fontKey];
+
+                    const fsLarge = baseUnit * 1.5; 
+                    const fsMed = baseUnit * 0.9;   
+
+                    const leftX = padding;
+                    const rightX = width - padding;
+                    const topY = height + padding;
+
+                    // --- DRAW LEFT ---
+                    ctx.font = `bold ${fsLarge}px ${fontStack}`;
+                    ctx.textAlign = 'left';
+                    
+                    const showMake = document.getElementById('show-make').checked;
+                    const showModel = document.getElementById('show-model').checked;
+                    let brandModel = "";
+                    if (showMake) brandModel += getVal('in-make') + " ";
+                    if (showModel) brandModel += getVal('in-model');
+                    brandModel = brandModel.trim() || (showMake || showModel ? "Camera Model" : "");
+                    
+                    ctx.fillText(brandModel, leftX, topY);
+
+                    ctx.font = `400 ${fsMed}px ${fontStack}`;
+                    let currentY = topY + fsLarge + (baseUnit * 0.6);
+                    
+                    const showDate = document.getElementById('show-date').checked;
+                    const showTime = document.getElementById('show-time').checked;
+                    let dtParts = [];
+                    if (showDate && getVal('in-date')) dtParts.push(getVal('in-date'));
+                    if (showTime && getVal('in-time')) dtParts.push(getVal('in-time'));
+                    
+                    if (dtParts.length > 0) {
+                        drawIcon(ctx, icons.calendar, leftX, currentY, fsMed, ctx.fillStyle);
+                        ctx.fillText(dtParts.join(' • '), leftX + (fsMed * 1.5), currentY);
+                        currentY += (fsMed * 1.5);
+                    }
+
+                    const showLoc = document.getElementById('show-location').checked;
+                    const loc = getVal('in-location') || getVal('in-coords');
+                    if (showLoc && loc) {
+                        drawIcon(ctx, icons.mapPin, leftX, currentY, fsMed, ctx.fillStyle);
+                        ctx.fillText(loc, leftX + (fsMed * 1.5), currentY);
+                    }
+
+                    // --- DRAW RIGHT ---
+                    ctx.textAlign = 'right';
+                    ctx.font = `500 ${fsMed}px ${fontStack}`;
+                    
+                    const lineHeight = fsMed * 1.6;
+                    let rightY = topY + (baseUnit * 0.2); 
+
+                    // Line 1
+                    const showFocal = document.getElementById('show-focal').checked;
+                    const showAperture = document.getElementById('show-aperture').checked;
+                    const showShutter = document.getElementById('show-shutter').checked;
+                    
+                    const spacer = "    ";
+                    let itemsL1 = [];
+                    if(showFocal && getVal('in-focal')) itemsL1.push(getVal('in-focal'));
+                    if(showAperture && getVal('in-aperture')) itemsL1.push(getVal('in-aperture'));
+                    if(showShutter && getVal('in-shutter')) itemsL1.push(getVal('in-shutter'));
+                    
+                    if (itemsL1.length > 0) ctx.fillText(itemsL1.join(spacer), rightX, rightY);
+                    rightY += lineHeight;
+
+                    // Line 2
+                    const showIso = document.getElementById('show-iso').checked;
+                    const showExp = document.getElementById('show-exp').checked;
+                    const showMp = document.getElementById('show-mp').checked;
+                    let itemsL2 = [];
+                    if (showIso && getVal('in-iso')) itemsL2.push(getVal('in-iso'));
+                    if (showExp && getVal('in-exp')) itemsL2.push(getVal('in-exp'));
+                    if (showMp && getVal('in-mp')) itemsL2.push(getVal('in-mp'));
+                    
+                    if (itemsL2.length > 0) ctx.fillText(itemsL2.join(spacer), rightX, rightY);
+                    rightY += lineHeight;
+
+                    // Line 3 (Flash)
+                    const showFlash = document.getElementById('show-flash').checked;
+                    const flashTxt = document.getElementById('in-flash').value;
+                    if (showFlash && flashTxt) {
+                        const textWidth = ctx.measureText(flashTxt).width;
+                        ctx.fillText(flashTxt, rightX, rightY);
+                        
+                        const iconX = rightX - textWidth - (fsMed * 1.5);
+                        let iconPath = icons.flash;
+                        if (flashTxt === "No Flash") iconPath = icons.flashOff;
+                        
+                        drawIcon(ctx, iconPath, iconX, rightY, fsMed, ctx.fillStyle);
+                    }
+                }
+
+                // Trigger Download
+                const link = document.createElement('a');
+                let fname = originalFilename ? `shotcard_${originalFilename}` : `shotcard-${Date.now()}`;
+                fname = fname.replace(/[^a-z0-9_\-]/gi, '_');
+                
+                link.download = `${fname}.${ext}`;
+                link.href = canvas.toDataURL(format, quality);
+                link.click();
+                
+                hasDownloaded = true;
+
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 50);
+        }
+
+        function drawIcon(ctx, pathData, x, y, size, color) {
+            ctx.save();
+            const p = new Path2D(pathData);
+            ctx.translate(x, y);
+            const scale = size / 24;
+            ctx.scale(scale, scale);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = color;
+            ctx.stroke(p);
+            ctx.restore();
+        }
+
     </script>
 </body>
+
 </html>
