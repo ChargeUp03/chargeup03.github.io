@@ -1,1 +1,40 @@
-{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#121826","background_color":"#121826","display":"standalone"}
+{
+  "name": "ShotCard",
+  "short_name": "ShotCard",
+  "description": "Add camera information to your photos!",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#121826",
+  "theme_color": "#121826",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Upload Photo",
+      "short_name": "Upload",
+      "url": "index.html?action=upload",
+      "icons": [
+        {
+          "src": "upload-icon.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
