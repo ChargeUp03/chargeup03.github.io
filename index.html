@@ -167,6 +167,11 @@
                 font-size: 32px; /* Scales title down slightly for smaller screens */
             }
         }
+
+        .card-grid .card:only-child {
+    grid-column: 1 / -1;
+}
+        
     </style>
 </head>
 <body>
@@ -321,11 +326,11 @@
                 <a href="https://www.youtube.com/@chargeupgaming" target="_blank" class="small-btn">Charge (YouTube)</a>
                 <a href="https://www.youtube.com/@whitedesktech" target="_blank" class="small-btn">WhiteDeskTech (YouTube)</a>
                 <a href="https://www.instagram.com/whitedesktech/" target="_blank" class="small-btn">WhiteDeskTech (Instagram)</a>
-                <a href="https://www.youtube.com/@ChargeStudios03" target="_blank" class="small-btn">Charge Studio</a>
+                <a href="https://www.youtube.com/@ChargeStudios03" target="_blank" class="small-btn">Charge Studios</a>
                 <a href="https://github.com/ChargeUp03" target="_blank" class="small-btn">GitHub</a>
                 <a href="https://beamng.com/members/charge_1.408396/" target="_blank" class="small-btn">BeamNG User Page</a>
                 
-                <button class="small-btn" onclick="navigator.clipboard.writeText('YOUR_MAKER_ID_HERE').then(() => alert('Maker ID copied to clipboard!'))">
+                <button class="small-btn" onclick="navigator.clipboard.writeText('YOUR_MAKER_ID_HERE').then(() => alert('Maker ID copied to clipboard.'))">
                     Super Mario Maker 2 Maker ID
                 </button>
             </div>
@@ -334,8 +339,9 @@
         <section>
             <h2>About Me</h2>
             <p class="about-text">
-                Hello! Welcome to my page. I'm an avid gamer, writier, coder, and also have many interests, like tech, and Mario. I also collect phones! My collection includes:
+                Hello! Welcome to my page. I'm an avid gamer, writer, coder, and also have many interests, like tech and Mario. I also collect phones! My collection includes:
             </p>
+            <br>
                    <ul>
                     <li>Apple iPhone 14</li>
                     <li>Apple iPod touch 4</li>
@@ -350,6 +356,7 @@
                     <li>Samsung Galaxy Nexus</li>
                     <li>Soyes XS24 Pro</li>
                 </ul>
+            <br>
             <p>My setup: Intel Core i7, Nvidia 1060 6GB, 16GB RAM, Windows 10</p>
         </section>
     </main>
