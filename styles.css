@@ -53,8 +53,8 @@ body::before {
     radial-gradient(60vmax 50vmax at 88% -10%, rgba(70, 130, 190, 0.34), transparent 60%),
     radial-gradient(50vmax 42vmax at -5% 32%, rgba(70, 90, 200, 0.2), transparent 60%),
     radial-gradient(46vmax 40vmax at 92% 82%, rgba(40, 160, 170, 0.15), transparent 60%),
-    radial-gradient(40vmax 30vmax at 0% 100%, rgba(255, 122, 26, 0.2), transparent 62%),
-    radial-gradient(26vmax 20vmax at 65% 105%, rgba(255, 140, 40, 0.09), transparent 65%),
+    radial-gradient(40vmax 30vmax at 0% 100%, rgba(255, 122, 26, 0.4), transparent 62%),
+    radial-gradient(26vmax 20vmax at 65% 105%, rgba(255, 140, 40, 0.2), transparent 65%),
     linear-gradient(170deg, var(--bg-top) 0%, var(--bg-mid) 45%, var(--bg-bottom) 100%);
 }
 
