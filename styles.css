@@ -53,6 +53,8 @@ body::before {
     radial-gradient(60vmax 50vmax at 88% -10%, rgba(70, 130, 190, 0.34), transparent 60%),
     radial-gradient(50vmax 42vmax at -5% 32%, rgba(70, 90, 200, 0.2), transparent 60%),
     radial-gradient(46vmax 40vmax at 92% 82%, rgba(40, 160, 170, 0.15), transparent 60%),
+    radial-gradient(40vmax 30vmax at 0% 100%, rgba(255, 122, 26, 0.2), transparent 62%),
+    radial-gradient(26vmax 20vmax at 65% 105%, rgba(255, 140, 40, 0.09), transparent 65%),
     linear-gradient(170deg, var(--bg-top) 0%, var(--bg-mid) 45%, var(--bg-bottom) 100%);
 }
 
@@ -346,9 +348,8 @@ figcaption { margin-top: 0.5rem; font-size: 0.9rem; }
 .row p { font-size: 0.9rem; }
 .row:hover { background: rgba(255, 255, 255, 0.12); }
 
-.concept { display: grid; align-content: start; }
-.concept h3 { font-size: 1.4rem; }
-.concept > p { margin-top: 0.4rem; color: var(--muted); }
+.concept { display: flex; flex-direction: column; }
+.concept .btn { margin-top: auto; }
 
 .card.more {
   background: linear-gradient(145deg, rgba(143, 211, 255, 0.22), rgba(143, 211, 255, 0.06));
@@ -452,7 +453,7 @@ figcaption { margin-top: 0.5rem; font-size: 0.9rem; }
 /* Side-by-side phone screenshots next to text, and homepage phone snaps */
 .pair { display: flex; justify-content: center; gap: 0.9rem; }
 .pair .media { width: min(44%, 170px); flex: none; }
-.snaps.phones { grid-template-columns: repeat(2, minmax(0, 140px)); justify-content: start; }
+.snaps.phones { grid-template-columns: repeat(2, minmax(0, 130px)); justify-content: start; }
 
 /* Two-up gallery */
 .gallery.two-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
