@@ -1,361 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charge's Corner of the Web</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-    <style>
-        /* Base Styles */
-        body {
-            background-color: #121212; 
-            color: #ffffff; 
-            font-family: 'Inter', sans-serif; 
-            margin: 0;
-            padding: 0; 
-            text-align: center; /* Centers standard text globally */
-        }
-
-        /* Header Styles */
-        header {
-            padding: 24px 40px; 
-            text-align: left; 
-            position: static; 
-        }
-
-        header img {
-            max-height: 60px; 
-            width: auto;
-            /* Hover transition removed since it's no longer a link */
-        }
-
-        /* Main Content Container */
-        main {
-            max-width: 900px; /* Constrains the width so it doesn't stretch infinitely on huge monitors */
-            margin: 0 auto; /* Centers the main content block */
-            padding: 0 20px 80px 20px;
-        }
-
-        /* Title Area */
-        .page-title {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px; /* Space between text and image */
-        }
-
-        .page-title img {
-            height: 1em; /* Perfectly matches the height of the font */
-            width: auto;
-            border-radius: 4px; /* Optional: adds a tiny curve to the title image */
-        }
-
-        /* Section Styling */
-        section {
-            margin-bottom: 60px;
-        }
-
-        h2 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            border-bottom: 2px solid #2a2a2a;
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-
-        /* Big Button Grid (2 columns desktop, 1 mobile) */
-        .card-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 wide on desktop */
-            gap: 20px;
-            text-align: left; /* Makes the text inside cards readable */
-        }
-
-        /* Big Button (Card) Styles */
-        .card {
-            display: block; /* Makes the whole block clickable */
-            background-color: #2a2a2a;
-            border: 1px solid #4a4a4a;
-            border-radius: 12px;
-            overflow: hidden;
-            text-decoration: none;
-            color: #ffffff;
-            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        }
-
-        .card:hover {
-            background-color: #3d3d3d;
-            transform: translateY(-4px); /* Slight lift effect */
-        }
-
-        .card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover; /* Ensures images fill the top area nicely */
-            background-color: #1a1a1a; /* Fallback color before image loads */
-            border-bottom: 1px solid #4a4a4a;
-        }
-
-        .card-content {
-            padding: 20px;
-        }
-
-        .card-content h3 {
-            margin: 0 0 8px 0;
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .card-content p {
-            margin: 0;
-            font-size: 14px;
-            color: #cccccc; /* Slightly dimmed description text */
-            line-height: 1.5;
-        }
-
-        /* Small Buttons (Socials) Container */
-        .small-btn-container {
-            display: flex;
-            flex-wrap: wrap; /* Wraps to next line when out of screen space */
-            justify-content: center;
-            gap: 15px;
-        }
-
-        /* Small Button Styles */
-        .small-btn {
-            background-color: #2a2a2a; 
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 500;
-            padding: 10px 20px;
-            border: 1px solid #4a4a4a; 
-            border-radius: 8px; 
-            cursor: pointer;
-            text-decoration: none; 
-            transition: background-color 0.2s ease-in-out; 
-            display: inline-block;
-        }
-
-        .small-btn:hover {
-            background-color: #3d3d3d; 
-        }
-
-        /* About Me Text */
-        .about-text {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #e0e0e0;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .card-grid {
-                grid-template-columns: 1fr; /* Swaps to 1 wide on mobile */
-            }
-            .page-title {
-                font-size: 32px; /* Scales title down slightly for smaller screens */
-            }
-        }
-        
-    </style>
+  <title>Charge's Corner of the Web</title>
+  <meta name="description" content="Projects by chargeup03: Chargeverse, UI concepts, mods, apps, and shortcuts.">
+  <meta name="theme-color" content="#06121c">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 
-    <header>
-        <img src="https://via.placeholder.com/150x50/2a2a2a/ffffff?text=Logo" alt="Site Logo">
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="index.html">Charge's Corner of the Web</a>
+    <div class="nav-links"><a href="index.html" aria-current="page">Home</a><a href="chargeverse.html">Chargeverse</a><a
+        href="ui-concepts.html">UI Concepts</a><a href="mods.html">Mods</a><a href="apps.html">Apps</a><a
+        href="shortcuts.html">Shortcuts</a><a href="about.html">About</a></div>
+  </nav>
+  <main id="main">
+
+    <header class="hero wrap">
+      <h1>Home</h1>
+      <p class="lead">The homepage for most of Charge's creative work.</p>
+      <div class="chips"><a href="#chargeverse">Chargeverse</a><a href="#ui-concepts">UI Concepts</a><a
+          href="#mods">Mods</a><a href="#apps">Apps</a><a href="#shortcuts">Shortcuts</a><a href="#about">About Me</a>
+      </div>
     </header>
 
-    <main>
-        <h1 class="page-title">
-            <img src="https://via.placeholder.com/100x100/2a2a2a/ffffff?text=Icon" alt="To be added">
-            Charge's Corner of the Web
-        </h1>
-        <p>Hello! Welcome to my corner of the web. This is the landing page for all my other projects, or you can learn more about me.</p>
+    <div class="wrap">
 
-        <section>
+      <section class="panel glass" id="chargeverse">
+        <div class="panel-head">
+          <div>
+            <h2>Chargeverse</h2>
+          </div><a class="btn " href="chargeverse.html">To Chargeverse</a>
+        </div>
+        <div class="split">
+          <div class="stack">
+            <p>The Chargeverse is a cohesive universe for the Super Mario universe and beyond.</p>
+            <div class="btn-row"><a class="btn primary" href="https://archiveofourown.org/series/6360486">Stories</a><a
+                class="btn primary" href="https://chargeup03.github.io/Chargeverse-Wiki/">Wiki</a></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel glass" id="ui-concepts">
+        <div class="panel-head">
+          <div>
             <h2>UI Concepts</h2>
-            <div class="card-grid">
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Viewfinder" alt="Viewfinder">
-                    <div class="card-content">
-                        <h3>Viewfinder</h3>
-                        <p>A clean, ad-free TV OS concept.</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=FreeBoard" alt="FreeBoard">
-                    <div class="card-content">
-                        <h3>FreeBoard</h3>
-                        <p>A slides editor that's more than a slides editor.</p>
-                    </div>
-                </a>
+            <p>Design and product mockups I've created.</p>
+          </div><a class="btn " href="ui-concepts.html">To UI Concepts</a>
+        </div>
+        <div class="grid cols-3">
+          <div class="concept">
+            <h3>Viewfinder</h3>
+            <p>The best-in-class smart TV ecosystem.</p>
+            <div class="snaps wide">
+              <div class="media wide"><img src="images/placeholder.svg" alt="Viewfinder snapshot 1" loading="lazy">
+              </div>
+              <div class="media wide"><img src="images/placeholder.svg" alt="Viewfinder snapshot 2" loading="lazy">
+              </div>
+              <div class="media wide"><img src="images/placeholder.svg" alt="Viewfinder snapshot 3" loading="lazy">
+              </div>
             </div>
-        </section>
-
-        <section>
-            <h2>Hacks and Mods</h2>
-            <div class="card-grid">
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=SMW:+Challenge+Mode" alt="SMW">
-                    <div class="card-content">
-                        <h3>Super Mario World: Challenge Mode</h3>
-                        <p>Mario, Luigi, and Peach race across Dinosaur Land.</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=SimpleHotbar" alt="SimpleHotbar">
-                    <div class="card-content">
-                        <h3>SimpleHotbar</h3>
-                        <p>A sleeker hotbar UI for Minecraft.</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=BeamNG+Mods" alt="BeamNG Mods">
-                    <div class="card-content">
-                        <h3>BeamNG Mods</h3>
-                        <p>Some of my mods that I've made for BeamNG.</p>
-                    </div>
-                </a>
+            <a class="btn small" href="ui-concepts.html#viewfinder">See Viewfinder</a>
+          </div>
+          <div class="concept">
+            <h3>FreeBoard</h3>
+            <p>A slideshow-based UI concept designer.</p>
+            <div class="snaps wide">
+              <div class="media wide"><img src="images/placeholder.svg" alt="FreeBoard snapshot 1" loading="lazy"></div>
+              <div class="media wide"><img src="images/placeholder.svg" alt="FreeBoard snapshot 2" loading="lazy"></div>
+              <div class="media wide"><img src="images/placeholder.svg" alt="FreeBoard snapshot 3" loading="lazy"></div>
             </div>
-        </section>
+            <a class="btn small" href="ui-concepts.html#freeboard">See FreeBoard</a>
+          </div>
+          <div class="concept">
+            <h3>UltraCam</h3>
+            <p>Fine tune every single thing about your iPhone's camera, all for free with no ads.</p>
+            <div class="snaps phones">
+              <div class="media phone"><img src="images/placeholder.svg" alt="UltraCam snapshot 1" loading="lazy"></div>
+              <div class="media phone"><img src="images/placeholder.svg" alt="UltraCam snapshot 2" loading="lazy"></div>
+            </div>
+            <a class="btn small" href="ui-concepts.html#ultracam">See UltraCam</a>
+          </div>
+        </div>
+      </section>
 
-        <section>
+      <section class="panel glass" id="mods">
+        <div class="panel-head">
+          <div>
+            <h2>Mods</h2>
+            <p>Packs, mods, and hacks I've made for Minecraft, BeamNG.drive, and Super Mario World.</p>
+          </div><a class="btn " href="mods.html">To Mods</a>
+        </div>
+        <div class="grid cols-3">
+          <div class="sub glass-soft">
+            <h3>Minecraft</h3>
+            <div class="rows">
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="SimpleHotbar" loading="lazy"></div>
+                <div>
+                  <h4><a class="stretch" href="https://modrinth.com/resourcepack/simplehotbar">SimpleHotbar</a></h4>
+                  <p>A sleeker and cleaner hotbar for Minecraft Java.</p>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="Now Playing loading=" lazy"></div>
+                <div>
+                  <h4><a class="stretch" href="https://modrinth.com/resourcepack/nowplaying">Now Playing</a></h4>
+                  <p>Modernizes Minecraft's disc textures, along with showing album art.</p>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="Elytra Chestplates" loading="lazy">
+                </div>
+                <div>
+                  <h4><a class="stretch"
+                      href="https://github.com/ChargeUp03/elytra_chestplates/releases/tag/v1.0a">Elytra Chestplates</a>
+                  </h4>
+                  <p>Combine elytra and any chestplate to have both their functionality, fully vanilla! Currently in
+                    beta.</p>
+                </div>
+              </div>
+            </div><a class="btn small" href="mods.html#minecraft">Minecraft on Mods page</a>
+          </div>
+          <div class="sub glass-soft">
+            <h3>BeamNG</h3>
+            <div class="rows">
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="Aeon Arc" loading="lazy"></div>
+                <div>
+                  <h4><a class="stretch" href="https://chargeup.gumroad.com/l/aeon-arc?layout=profile">Aeon Arc</a></h4>
+                  <p>A lore-friendly version of the Tesla Model 3 Highland.</p>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="Hover Motors" loading="lazy"></div>
+                <div>
+                  <h4><a class="stretch"
+                      href="https://www.beamng.com/resources/hover-motors-float-collection.28197/">Hover Motors Float
+                      Collection</a></h4>
+                  <p>A better Automation hovercar mod.</p>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="Configpack loading=" lazy"></div>
+                <div>
+                  <h4><a class="stretch"
+                      href="https://www.beamng.com/resources/charge-ups-ultimate-configpack.30521/">Charge's Ultimate
+                      Configpack</a></h4>
+                  <p>A collection of configurations I've made while playing BeamNG.</p>
+                </div>
+              </div>
+              <div class="row more">
+                <div class="media square"><img src="images/placeholder.svg" alt="All BeamNG mods" loading="lazy"></div>
+                <div>
+                  <h4><a class="stretch" href="https://www.beamng.com/members/charge_1.408396/">All BeamNG Mods</a></h4>
+                  <p>All of my BeamNG mods on my forums userpage.</p>
+                </div>
+              </div>
+            </div><a class="btn small" href="mods.html#beamng">BeamNG on Mods page</a>
+          </div>
+          <div class="sub glass-soft">
+            <h3>Super Mario World</h3>
+            <div class="rows">
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="Super Mario Otherworld" loading="lazy">
+                </div>
+                <div>
+                  <h4><a class="stretch" href="index.html">Super Mario Otherworld</a></h4>
+                  <p>After finding themselves in an unknown land, Mario, Luigi, Peach, and Daisy must find a way to save
+                    the Otherworld. This hack is WIP.</p>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="media square"><img src="images/placeholder.svg" alt="Super Mario World CM" loading="lazy">
+                </div>
+                <div>
+                  <h4><a class="stretch" href="https://github.com/ChargeUp03/smw-cm">Super Mario World: Challenge
+                      Mode</a></h4>
+                  <p>After saving Peach and the Yoshi eggs, Mario and co. decide to race across Dinosaur Land.</p>
+                </div>
+              </div>
+            </div><a class="btn small" href="mods.html#super-mario-world">SMW on Mods page</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel glass" id="apps">
+        <div class="panel-head">
+          <div>
             <h2>Apps and Web Apps</h2>
-            <div class="card-grid">
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Toaster" alt="Toaster">
-                    <div class="card-content">
-                        <h3>Toaster</h3>
-                        <p>An Android app that allows you to display your own toast messages.</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=ShotCard" alt="ShotCard">
-                    <div class="card-content">
-                        <h3>ShotCard</h3>
-                        <p>Add camera info to your photos!</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Litebulb" alt="Litebulb">
-                    <div class="card-content">
-                        <h3>Litebulb</h3>
-                        <p>An AI client designed for older devices.</p>
-                    </div>
-                </a>
+            <p>Apps and web apps made for utility or just for fun.</p>
+          </div><a class="btn " href="apps.html">To Apps</a>
+        </div>
+        <div class="grid cols-4">
+          <article class="card glass-soft ">
+            <div class="media "><img src="images/placeholder.svg" alt="ShotCard" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="https://chargeup03.github.io/shotcard/">ShotCard</a></h3>
+              <p>Add camera info to your photos in a stylistic way.</p>
             </div>
-        </section>
+          </article>
+          <article class="card glass-soft ">
+            <div class="media "><img src="images/placeholder.svg" alt="Litebulb" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="https://chargeup03.github.io/litebulb/">Litebulb</a></h3>
+              <p>A lightweight client for Gemini.</p>
+            </div>
+          </article>
+          <article class="card glass-soft ">
+            <div class="media "><img src="images/placeholder.svg" alt="Snap" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">Snap</a></h3>
+              <p>Unprocessed camera app that keeps you in the moment. This app is WIP.</p>
+            </div>
+          </article>
+          <article class="card glass-soft ">
+            <div class="media "><img src="images/placeholder.svg" alt="Toaster" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">Toaster</a></h3>
+              <p>Send toasts to your Android device! This app is WIP.</p>
+            </div>
+          </article>
+        </div>
+      </section>
 
-        <section>
+      <section class="panel glass" id="shortcuts">
+        <div class="panel-head">
+          <div>
             <h2>Shortcuts</h2>
-            <div class="card-grid">
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+Shop" alt="Shortcut Shop">
-                    <div class="card-content">
-                        <h3>Charge's Shortcut Shop</h3>
-                        <p>All my iOS Shortcuts, presented like an app store!</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+1" alt="Shortcut 1">
-                    <div class="card-content">
-                        <h3>Get Device Details</h3>
-                        <p>View information about your device. [Direct download]</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+2" alt="Shortcut 2">
-                    <div class="card-content">
-                        <h3>QuickWeather</h3>
-                        <p>See the weather at a glance! [Direct download]</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+3" alt="Shortcut 3">
-                    <div class="card-content">
-                        <h3>Connectivity Killswitch</h3>
-                        <p>Quickly turn off all connectivity. [Direct download]</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+4" alt="Shortcut 4">
-                    <div class="card-content">
-                        <h3>FastNav</h3>
-                        <p>Get to your favorite places faster! [Direct download]</p>
-                    </div>
-                </a>
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+5" alt="Shortcut 5">
-                    <div class="card-content">
-                        <h3>Self-Destruct</h3>
-                        <p>iPhone go boom [Direct download]</p>
-                    </div>
-                </a>
-        </section>
-
-        <section>
-            <h2>The Chargeverse</h2>
-            <div class="card-grid">
-                <a href="YOUR_LINK" class="card">
-                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=The+Chargeverse" alt="The Chargeverse">
-                    <div class="card-content">
-                        <h3>The Chargeverse</h3>
-                        <p>My expansive Super Mario fanfiction universe.</p>
-                    </div>
-                </a>
+            <p>Some of my shortcuts, as well as a database project.</p>
+          </div><a class="btn " href="shortcuts.html">To Shortcuts</a>
+        </div>
+        <div class="grid cols-2">
+          <article class="card glass-soft big">
+            <div class="media "><img src="images/placeholder.svg" alt="Shortcut Shop" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="https://github.com/ChargeUp03/ChargesShortcutShop">Shortcut Shop</a></h3>
+              <p>More info on all of my shortcuts.</p>
             </div>
-        </section>
-
-        <section>
-            <h2>Socials</h2>
-            <div class="small-btn-container">
-                <a href="https://www.youtube.com/@chargeupgaming" target="_blank" class="small-btn">Charge (YouTube)</a>
-                <a href="https://www.youtube.com/@whitedesktech" target="_blank" class="small-btn">WhiteDeskTech (YouTube)</a>
-                <a href="https://www.instagram.com/whitedesktech/" target="_blank" class="small-btn">WhiteDeskTech (Instagram)</a>
-                <a href="https://www.youtube.com/@ChargeStudios03" target="_blank" class="small-btn">Charge Studios</a>
-                <a href="https://github.com/ChargeUp03" target="_blank" class="small-btn">GitHub</a>
-                <a href="https://beamng.com/members/charge_1.408396/" target="_blank" class="small-btn">BeamNG User Page</a>
-                
-                <button class="small-btn" onclick="navigator.clipboard.writeText('YOUR_MAKER_ID_HERE').then(() => alert('Maker ID copied to clipboard.'))">
-                    Super Mario Maker 2 Maker ID
-                </button>
+          </article>
+          <article class="card glass-soft big">
+            <div class="media "><img src="images/placeholder.svg" alt="Shortcuts Database" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="https://github.com/ChargeUp03/shortcut-database">Shortcut Database</a></h3>
+              <p>A project to archive and document everything about Shortcuts.</p>
             </div>
-        </section>
+          </article>
+        </div>
+        <div class="grid cols-4 compact" style="margin-top:1rem">
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="Action Button Actions" loading="lazy">
+            </div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">Action Button Actions</a></h3>
+              <p>Quick actions for your iPhone.</p>
+            </div>
+          </article>
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="MP4 to MP3 Converter" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">MP4 to M4A Converter</a></h3>
+              <p>Convert .mp4 files to .m4a from the Quick Actions menu.</p>
+            </div>
+          </article>
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="Snap" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">Snap</a></h3>
+              <p>Quick, unprocessed photos. Shortcuts version of the Snap app.</p>
+            </div>
+          </article>
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="Shortcut File and Icon Exporter"
+                loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">Shortcut File and Icon Exporter</a></h3>
+              <p>Export .shortcut files and icons.</p>
+            </div>
+          </article>
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="QuickWeather" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">QuickWeather</a></h3>
+              <p>Glance at the weather conditions quickly.</p>
+            </div>
+          </article>
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="Get Device Details" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">Get Device Details</a></h3>
+              <p>Find all sorts of info on your device.</p>
+            </div>
+          </article>
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="FastNav" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">FastNav</a></h3>
+              <p>Get to your favorite places faster!</p>
+            </div>
+          </article>
+          <article class="card glass-soft compact icon">
+            <div class="media square"><img src="images/placeholder.svg" alt="Self-Destruct" loading="lazy"></div>
+            <div class="card-body">
+              <h3><a class="stretch" href="index.html">Self-Destruct</a></h3>
+              <p>(Tries to) blow up your iPhone.)</p>
+            </div>
+          </article>
+        </div>
+      </section>
 
-        <section>
+      <section class="panel glass" id="about">
+        <div class="panel-head">
+          <div>
             <h2>About Me</h2>
-            <p class="about-text">
-                Hello! Welcome to my page. I'm an avid gamer, writer, coder, and also have many interests, like tech and Mario. I also collect phones! My collection includes:
-            </p>
-            <br>
-                   <ul>
-                    <li>Apple iPhone 14</li>
-                    <li>Apple iPod touch 4</li>
-                    <li>Apple iPhone SE (1st gen)</li>
-                    <li>Apple iPhone 6 (x2)</li>
-                    <li>Asus Zenfone 3</li>
-                    <li>Asus Zenfone 2</li>
-                    <li>OnePlus 6T</li>
-                    <li>Samsung Galaxy A32 5G</li>
-                    <li>LG Nexus 5</li>
-                    <li>Samsung Galaxy Nexus</li>
-                    <li>Samsung Galaxy Nexus</li>
-                    <li>Soyes XS24 Pro</li>
-                </ul>
-            <br>
-            <p>My setup: Intel Core i7, Nvidia 1060 6GB, 16GB RAM, Windows 10</p>
-        </section>
-    </main>
+          </div><a class="btn " href="about.html">Open About</a>
+        </div>
+        <div class="two">
+          <div>
+            <p>Get to know the creator behind everything here!</p>
+            <h3>Socials</h3>
+            <div class="btn-row"><a class="btn " href="https://www.youtube.com/@chargeupgaming">YouTube</a><a
+                class="btn "
+                href="https://www.instagram.com/chargeupgaming_?xtok=MWEyZTJ2M2xkYmNkcg%3D%3D&utm_source=qr">Instagram</a><a
+                class="btn " href="https://github.com/ChargeUp03">GitHub</a><a class="btn "
+                href="https://www.beamng.com/members/charge_1.408396/">BeamNG</a><a class="btn" href="#"
+                data-copy-maker-id>Super Mario Maker 2</a></div>
+            <h3>Current Setup</h3>
+            <dl class="spec">
+              <div>
+                <dt>Phone</dt>
+                <dd>iPhone 14</dd>
+              </div>
+              <div>
+                <dt>PC</dt>
+                <dd>Mac mini M4 / 24GB RAM</dd>
+              </div>
+              <div>
+                <dt>Watch</dt>
+                <dd>Apple Watch SE 2</dd>
+              </div>
+              <div>
+                <dt>Music</dt>
+                <dd>iPod touch 4G</dd>
+              </div>
+              <div>
+                <dt>Headphones</dt>
+                <dd>Audio Technica ATH-M20x BT</dd>
+              </div>
+            </dl>
+          </div>
+          <div>
+            <h3>Phone Collection</h3>
+            <dl class="spec">
+              <div>
+                <dt>Apple</dt>
+                <dd>iPhone SE (1st gen)</dd>
+              </div>
+              <div>
+                <dt>Apple</dt>
+                <dd>iPhone 6 (x2)</dd>
+              </div>
+              <div>
+                <dt>Asus</dt>
+                <dd>Zenfone 3</dd>
+              </div>
+              <div>
+                <dt>Asus</dt>
+                <dd>Zenfone 2</dd>
+              </div>
+              <div>
+                <dt>OnePlus</dt>
+                <dd>6T</dd>
+              </div>
+              <div>
+                <dt>Samsung</dt>
+                <dd>Galaxy A32 5G</dd>
+              </div>
+              <div>
+                <dt>LG</dt>
+                <dd>Nexus 5</dd>
+              </div>
+              <div>
+                <dt>Samsung</dt>
+                <dd>Galaxy Nexus</dd>
+              </div>
+              <div>
+                <dt>Samsung</dt>
+                <dd>Galaxy S7</dd>
+              </div>
+              <div>
+                <dt>Soyes</dt>
+                <dd>XS24 Pro</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+  <footer class="footer wrap">Content by Charge, code by Claude.</footer>
+  <script src="script.js"></script>
 </body>
+
 </html>

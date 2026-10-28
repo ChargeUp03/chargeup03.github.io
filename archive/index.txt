@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charge's Corner of the Web</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #121212; 
+            color: #ffffff; 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            padding: 0; 
+            text-align: center; /* Centers standard text globally */
+        }
+
+        /* Header Styles */
+        header {
+            padding: 24px 40px; 
+            text-align: left; 
+            position: static; 
+        }
+
+        header img {
+            max-height: 60px; 
+            width: auto;
+            /* Hover transition removed since it's no longer a link */
+        }
+
+        /* Main Content Container */
+        main {
+            max-width: 900px; /* Constrains the width so it doesn't stretch infinitely on huge monitors */
+            margin: 0 auto; /* Centers the main content block */
+            padding: 0 20px 80px 20px;
+        }
+
+        /* Title Area */
+        .page-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px; /* Space between text and image */
+        }
+
+        .page-title img {
+            height: 1em; /* Perfectly matches the height of the font */
+            width: auto;
+            border-radius: 4px; /* Optional: adds a tiny curve to the title image */
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #2a2a2a;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Big Button Grid (2 columns desktop, 1 mobile) */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 wide on desktop */
+            gap: 20px;
+            text-align: left; /* Makes the text inside cards readable */
+        }
+
+        /* Big Button (Card) Styles */
+        .card {
+            display: block; /* Makes the whole block clickable */
+            background-color: #2a2a2a;
+            border: 1px solid #4a4a4a;
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff;
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            background-color: #3d3d3d;
+            transform: translateY(-4px); /* Slight lift effect */
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover; /* Ensures images fill the top area nicely */
+            background-color: #1a1a1a; /* Fallback color before image loads */
+            border-bottom: 1px solid #4a4a4a;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .card-content p {
+            margin: 0;
+            font-size: 14px;
+            color: #cccccc; /* Slightly dimmed description text */
+            line-height: 1.5;
+        }
+
+        /* Small Buttons (Socials) Container */
+        .small-btn-container {
+            display: flex;
+            flex-wrap: wrap; /* Wraps to next line when out of screen space */
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* Small Button Styles */
+        .small-btn {
+            background-color: #2a2a2a; 
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border: 1px solid #4a4a4a; 
+            border-radius: 8px; 
+            cursor: pointer;
+            text-decoration: none; 
+            transition: background-color 0.2s ease-in-out; 
+            display: inline-block;
+        }
+
+        .small-btn:hover {
+            background-color: #3d3d3d; 
+        }
+
+        /* About Me Text */
+        .about-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr; /* Swaps to 1 wide on mobile */
+            }
+            .page-title {
+                font-size: 32px; /* Scales title down slightly for smaller screens */
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://via.placeholder.com/150x50/2a2a2a/ffffff?text=Logo" alt="Site Logo">
+    </header>
+
+    <main>
+        <h1 class="page-title">
+            <img src="https://via.placeholder.com/100x100/2a2a2a/ffffff?text=Icon" alt="To be added">
+            Charge's Corner of the Web
+        </h1>
+        <p>Hello! Welcome to my corner of the web. This is the landing page for all my other projects, or you can learn more about me.</p>
+
+        <section>
+            <h2>UI Concepts</h2>
+            <div class="card-grid">
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Viewfinder" alt="Viewfinder">
+                    <div class="card-content">
+                        <h3>Viewfinder</h3>
+                        <p>A clean, ad-free TV OS concept.</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=FreeBoard" alt="FreeBoard">
+                    <div class="card-content">
+                        <h3>FreeBoard</h3>
+                        <p>A slides editor that's more than a slides editor.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Hacks and Mods</h2>
+            <div class="card-grid">
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=SMW:+Challenge+Mode" alt="SMW">
+                    <div class="card-content">
+                        <h3>Super Mario World: Challenge Mode</h3>
+                        <p>Mario, Luigi, and Peach race across Dinosaur Land.</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=SimpleHotbar" alt="SimpleHotbar">
+                    <div class="card-content">
+                        <h3>SimpleHotbar</h3>
+                        <p>A sleeker hotbar UI for Minecraft.</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=BeamNG+Mods" alt="BeamNG Mods">
+                    <div class="card-content">
+                        <h3>BeamNG Mods</h3>
+                        <p>Some of my mods that I've made for BeamNG.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Apps and Web Apps</h2>
+            <div class="card-grid">
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Toaster" alt="Toaster">
+                    <div class="card-content">
+                        <h3>Toaster</h3>
+                        <p>An Android app that allows you to display your own toast messages.</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=ShotCard" alt="ShotCard">
+                    <div class="card-content">
+                        <h3>ShotCard</h3>
+                        <p>Add camera info to your photos!</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Litebulb" alt="Litebulb">
+                    <div class="card-content">
+                        <h3>Litebulb</h3>
+                        <p>An AI client designed for older devices.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Shortcuts</h2>
+            <div class="card-grid">
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+Shop" alt="Shortcut Shop">
+                    <div class="card-content">
+                        <h3>Charge's Shortcut Shop</h3>
+                        <p>All my iOS Shortcuts, presented like an app store!</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+1" alt="Shortcut 1">
+                    <div class="card-content">
+                        <h3>Get Device Details</h3>
+                        <p>View information about your device. [Direct download]</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+2" alt="Shortcut 2">
+                    <div class="card-content">
+                        <h3>QuickWeather</h3>
+                        <p>See the weather at a glance! [Direct download]</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+3" alt="Shortcut 3">
+                    <div class="card-content">
+                        <h3>Connectivity Killswitch</h3>
+                        <p>Quickly turn off all connectivity. [Direct download]</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+4" alt="Shortcut 4">
+                    <div class="card-content">
+                        <h3>FastNav</h3>
+                        <p>Get to your favorite places faster! [Direct download]</p>
+                    </div>
+                </a>
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=Shortcut+5" alt="Shortcut 5">
+                    <div class="card-content">
+                        <h3>Self-Destruct</h3>
+                        <p>iPhone go boom [Direct download]</p>
+                    </div>
+                </a>
+        </section>
+
+        <section>
+            <h2>The Chargeverse</h2>
+            <div class="card-grid">
+                <a href="YOUR_LINK" class="card">
+                    <img src="https://via.placeholder.com/400x180/1a1a1a/ffffff?text=The+Chargeverse" alt="The Chargeverse">
+                    <div class="card-content">
+                        <h3>The Chargeverse</h3>
+                        <p>My expansive Super Mario fanfiction universe.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Socials</h2>
+            <div class="small-btn-container">
+                <a href="https://www.youtube.com/@chargeupgaming" target="_blank" class="small-btn">Charge (YouTube)</a>
+                <a href="https://www.youtube.com/@whitedesktech" target="_blank" class="small-btn">WhiteDeskTech (YouTube)</a>
+                <a href="https://www.instagram.com/whitedesktech/" target="_blank" class="small-btn">WhiteDeskTech (Instagram)</a>
+                <a href="https://www.youtube.com/@ChargeStudios03" target="_blank" class="small-btn">Charge Studios</a>
+                <a href="https://github.com/ChargeUp03" target="_blank" class="small-btn">GitHub</a>
+                <a href="https://beamng.com/members/charge_1.408396/" target="_blank" class="small-btn">BeamNG User Page</a>
+                
+                <button class="small-btn" onclick="navigator.clipboard.writeText('YOUR_MAKER_ID_HERE').then(() => alert('Maker ID copied to clipboard.'))">
+                    Super Mario Maker 2 Maker ID
+                </button>
+            </div>
+        </section>
+
+        <section>
+            <h2>About Me</h2>
+            <p class="about-text">
+                Hello! Welcome to my page. I'm an avid gamer, writer, coder, and also have many interests, like tech and Mario. I also collect phones! My collection includes:
+            </p>
+            <br>
+                   <ul>
+                    <li>Apple iPhone 14</li>
+                    <li>Apple iPod touch 4</li>
+                    <li>Apple iPhone SE (1st gen)</li>
+                    <li>Apple iPhone 6 (x2)</li>
+                    <li>Asus Zenfone 3</li>
+                    <li>Asus Zenfone 2</li>
+                    <li>OnePlus 6T</li>
+                    <li>Samsung Galaxy A32 5G</li>
+                    <li>LG Nexus 5</li>
+                    <li>Samsung Galaxy Nexus</li>
+                    <li>Samsung Galaxy Nexus</li>
+                    <li>Soyes XS24 Pro</li>
+                </ul>
+            <br>
+            <p>My setup: Intel Core i7, Nvidia 1060 6GB, 16GB RAM, Windows 10</p>
+        </section>
+    </main>
+</body>
+</html>
